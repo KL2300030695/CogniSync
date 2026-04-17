@@ -16,7 +16,7 @@
 /** @type {Object.<string, string>} Namespaced localStorage keys */
 const STORAGE_KEYS = {
   JOURNAL_ENTRIES:  'eventflow_session_logs',
-  PATIENT_PROFILE:  'eventflow_venue_profile',
+  venue_PROFILE:  'eventflow_venue_profile',
   SETTINGS:         'eventflow_settings',
   EXERCISE_RESULTS: 'eventflow_facility_results',
 };
@@ -32,7 +32,7 @@ const STORAGE_KEYS = {
  * @param {Object} entry - Partial entry object to save
  * @param {Object[]} [entry.messages] - Chat message array
  * @param {Object} [entry.sentiment] - Sentiment analysis result
- * @param {string} [entry.patientText] - Raw patient text for this session
+ * @param {string} [entry.venueText] - Raw venue text for this session
  * @returns {Object} Complete saved entry with generated id and timestamp
  */
 export function saveJournalEntry(entry) {
@@ -99,10 +99,10 @@ export function getEntriesToday() {
 }
 
 // ─────────────────────────────────────────────
-// Patient Profile
+// venue Profile
 // ─────────────────────────────────────────────
 
-/** @type {Object} Default patient profile values */
+/** @type {Object} Default venue profile values */
 const DEFAULT_PROFILE = {
   name:               '',
   preferredName:      '',
@@ -116,13 +116,13 @@ const DEFAULT_PROFILE = {
 };
 
 /**
- * Retrieve the stored patient profile, or default values if none exists.
+ * Retrieve the stored venue profile, or default values if none exists.
  *
- * @returns {Object} Patient profile object
+ * @returns {Object} venue profile object
  */
-export function getPatientProfile() {
+export function getvenueProfile() {
   try {
-    const profile = JSON.parse(localStorage.getItem(STORAGE_KEYS.PATIENT_PROFILE));
+    const profile = JSON.parse(localStorage.getItem(STORAGE_KEYS.venue_PROFILE));
     return profile || { ...DEFAULT_PROFILE };
   } catch {
     return { ...DEFAULT_PROFILE };
@@ -130,16 +130,16 @@ export function getPatientProfile() {
 }
 
 /**
- * Save (merge-update) the patient profile.
+ * Save (merge-update) the venue profile.
  * Existing fields are preserved when not included in the update.
  *
  * @param {Object} profile - Partial profile fields to update
  * @returns {Object} Complete updated profile
  */
-export function savePatientProfile(profile) {
-  const existing = getPatientProfile();
+export function savevenueProfile(profile) {
+  const existing = getvenueProfile();
   const updated = { ...existing, ...profile, updatedAt: new Date().toISOString() };
-  localStorage.setItem(STORAGE_KEYS.PATIENT_PROFILE, JSON.stringify(updated));
+  localStorage.setItem(STORAGE_KEYS.venue_PROFILE, JSON.stringify(updated));
   return updated;
 }
 
@@ -149,7 +149,7 @@ export function savePatientProfile(profile) {
 
 /** @type {Object} Default application settings */
 const DEFAULT_SETTINGS = {
-  theme:        'patient',      // 'patient' | 'dashboard'
+  theme:        'venue',      // 'venue' | 'dashboard'
   voiceEnabled: true,
   fontSize:     'large',        // 'normal' | 'large' | 'extra-large'
   autoSave:     true,
@@ -192,7 +192,7 @@ export function saveSettings(settings) {
  *
  * @param {Object} result - Exercise result to save
  * @param {string} result.exerciseId - Exercise identifier
- * @param {string} [result.response]  - Patient's response
+ * @param {string} [result.response]  - venue's response
  * @returns {void}
  */
 export function saveExerciseResult(result) {
@@ -304,7 +304,7 @@ export function exportAllData() {
       version:        '1.0',
       exportedAt:     new Date().toISOString(),
       journalEntries: getJournalEntries(),
-      patientProfile: getPatientProfile(),
+      venueProfile: getvenueProfile(),
       settings:       getSettings(),
       exerciseResults: getExerciseResults(),
     },
@@ -331,8 +331,8 @@ export function importData(jsonString) {
     if (data.journalEntries) {
       localStorage.setItem(STORAGE_KEYS.JOURNAL_ENTRIES, JSON.stringify(data.journalEntries));
     }
-    if (data.patientProfile) {
-      localStorage.setItem(STORAGE_KEYS.PATIENT_PROFILE, JSON.stringify(data.patientProfile));
+    if (data.venueProfile) {
+      localStorage.setItem(STORAGE_KEYS.venue_PROFILE, JSON.stringify(data.venueProfile));
     }
     if (data.settings) {
       localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(data.settings));

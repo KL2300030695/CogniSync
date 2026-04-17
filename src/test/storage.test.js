@@ -3,8 +3,8 @@ import {
   saveJournalEntry,
   getJournalEntries,
   getRecentEntries,
-  getPatientProfile,
-  savePatientProfile,
+  getvenueProfile,
+  savevenueProfile,
   getSettings,
   saveSettings,
   saveExerciseResult,
@@ -24,40 +24,40 @@ describe('Storage Utilities', () => {
   describe('Journal Entries', () => {
     it('should save and retrieve journal entries', () => {
       const entry = {
-        messages: [{ role: 'patient', text: 'Hello Maya' }],
+        messages: [{ role: 'venue', text: 'Hello Maya' }],
         sentiment: { score: 0.8, emotion: 'happy', keywords: ['hello'], clarity: 75 },
-        patientText: 'Hello Maya',
+        venueText: 'Hello Maya',
       };
 
       const saved = saveJournalEntry(entry);
       expect(saved.id).toBeDefined();
       expect(saved.timestamp).toBeDefined();
-      expect(saved.patientText).toBe('Hello Maya');
+      expect(saved.venueText).toBe('Hello Maya');
 
       const entries = getJournalEntries();
       expect(entries).toHaveLength(1);
-      expect(entries[0].patientText).toBe('Hello Maya');
+      expect(entries[0].venueText).toBe('Hello Maya');
     });
 
     it('should save multiple entries and retrieve in order', () => {
-      saveJournalEntry({ patientText: 'First entry' });
-      saveJournalEntry({ patientText: 'Second entry' });
-      saveJournalEntry({ patientText: 'Third entry' });
+      saveJournalEntry({ venueText: 'First entry' });
+      saveJournalEntry({ venueText: 'Second entry' });
+      saveJournalEntry({ venueText: 'Third entry' });
 
       const entries = getJournalEntries();
       expect(entries).toHaveLength(3);
-      expect(entries[0].patientText).toBe('First entry');
-      expect(entries[2].patientText).toBe('Third entry');
+      expect(entries[0].venueText).toBe('First entry');
+      expect(entries[2].venueText).toBe('Third entry');
     });
 
     it('should get recent entries with limit', () => {
       for (let i = 0; i < 10; i++) {
-        saveJournalEntry({ patientText: `Entry ${i}` });
+        saveJournalEntry({ venueText: `Entry ${i}` });
       }
 
       const recent = getRecentEntries(3);
       expect(recent).toHaveLength(3);
-      expect(recent[0].patientText).toBe('Entry 7');
+      expect(recent[0].venueText).toBe('Entry 7');
     });
 
     it('should return empty array when no entries exist', () => {
@@ -67,7 +67,7 @@ describe('Storage Utilities', () => {
 
     it('should filter entries by date range', () => {
       const now = new Date();
-      const entry = saveJournalEntry({ patientText: 'Today' });
+      const entry = saveJournalEntry({ venueText: 'Today' });
 
       const tomorrow = new Date(now);
       tomorrow.setDate(tomorrow.getDate() + 1);
@@ -83,26 +83,26 @@ describe('Storage Utilities', () => {
     });
   });
 
-  describe('Patient Profile', () => {
+  describe('venue Profile', () => {
     it('should return default profile when none exists', () => {
-      const profile = getPatientProfile();
+      const profile = getvenueProfile();
       expect(profile.name).toBe('');
       expect(profile.preferredName).toBe('');
     });
 
-    it('should save and retrieve patient profile', () => {
-      savePatientProfile({ name: 'Margaret', preferredName: 'Maggie' });
-      const profile = getPatientProfile();
+    it('should save and retrieve venue profile', () => {
+      savevenueProfile({ name: 'Margaret', preferredName: 'Maggie' });
+      const profile = getvenueProfile();
       expect(profile.name).toBe('Margaret');
       expect(profile.preferredName).toBe('Maggie');
       expect(profile.updatedAt).toBeDefined();
     });
 
     it('should merge profile updates without losing data', () => {
-      savePatientProfile({ name: 'Margaret', favoriteTopics: 'Gardening' });
-      savePatientProfile({ preferredName: 'Maggie' });
+      savevenueProfile({ name: 'Margaret', favoriteTopics: 'Gardening' });
+      savevenueProfile({ preferredName: 'Maggie' });
 
-      const profile = getPatientProfile();
+      const profile = getvenueProfile();
       expect(profile.name).toBe('Margaret');
       expect(profile.preferredName).toBe('Maggie');
       expect(profile.favoriteTopics).toBe('Gardening');
@@ -112,7 +112,7 @@ describe('Storage Utilities', () => {
   describe('Settings', () => {
     it('should return default settings when none exist', () => {
       const settings = getSettings();
-      expect(settings.theme).toBe('patient');
+      expect(settings.theme).toBe('venue');
       expect(settings.voiceEnabled).toBe(true);
       expect(settings.fontSize).toBe('large');
       expect(settings.autoSave).toBe(true);
@@ -123,7 +123,7 @@ describe('Storage Utilities', () => {
       const settings = getSettings();
       expect(settings.fontSize).toBe('extra-large');
       expect(settings.voiceEnabled).toBe(false);
-      expect(settings.theme).toBe('patient'); // default preserved
+      expect(settings.theme).toBe('venue'); // default preserved
     });
   });
 
@@ -168,8 +168,8 @@ describe('Storage Utilities', () => {
 
   describe('Data Export/Import', () => {
     it('should export all data as JSON', () => {
-      saveJournalEntry({ patientText: 'Test entry' });
-      savePatientProfile({ name: 'Margaret' });
+      saveJournalEntry({ venueText: 'Test entry' });
+      savevenueProfile({ name: 'Margaret' });
       saveSettings({ fontSize: 'extra-large' });
 
       const exported = exportAllData();
@@ -178,14 +178,14 @@ describe('Storage Utilities', () => {
       expect(data.version).toBe('1.0');
       expect(data.exportedAt).toBeDefined();
       expect(data.journalEntries).toHaveLength(1);
-      expect(data.patientProfile.name).toBe('Margaret');
+      expect(data.venueProfile.name).toBe('Margaret');
       expect(data.settings.fontSize).toBe('extra-large');
     });
 
     it('should import data successfully', () => {
       const jsonData = JSON.stringify({
-        journalEntries: [{ id: 'test', patientText: 'Imported', timestamp: new Date().toISOString() }],
-        patientProfile: { name: 'Imported Patient' },
+        journalEntries: [{ id: 'test', venueText: 'Imported', timestamp: new Date().toISOString() }],
+        venueProfile: { name: 'Imported venue' },
         settings: { theme: 'dashboard' },
       });
 
@@ -194,10 +194,10 @@ describe('Storage Utilities', () => {
 
       const entries = getJournalEntries();
       expect(entries).toHaveLength(1);
-      expect(entries[0].patientText).toBe('Imported');
+      expect(entries[0].venueText).toBe('Imported');
 
-      const profile = getPatientProfile();
-      expect(profile.name).toBe('Imported Patient');
+      const profile = getvenueProfile();
+      expect(profile.name).toBe('Imported venue');
     });
 
     it('should handle invalid JSON gracefully', () => {
@@ -209,15 +209,15 @@ describe('Storage Utilities', () => {
 
   describe('Clear Data', () => {
     it('should clear all stored data', () => {
-      saveJournalEntry({ patientText: 'Entry' });
-      savePatientProfile({ name: 'Test' });
+      saveJournalEntry({ venueText: 'Entry' });
+      savevenueProfile({ name: 'Test' });
       saveSettings({ theme: 'dashboard' });
 
       clearAllData();
 
       expect(getJournalEntries()).toEqual([]);
-      expect(getPatientProfile().name).toBe('');
-      expect(getSettings().theme).toBe('patient');
+      expect(getvenueProfile().name).toBe('');
+      expect(getSettings().theme).toBe('venue');
     });
   });
 });

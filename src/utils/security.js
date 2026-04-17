@@ -29,7 +29,7 @@ export function stripHtml(input) {
 
 /**
  * Sanitize and truncate journal/chat text input.
- * @param {string} text - Raw patient text input
+ * @param {string} text - Raw attendee text input
  * @returns {string} Safe, truncated text
  */
 export function sanitizeJournalText(text) {

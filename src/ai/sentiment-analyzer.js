@@ -110,7 +110,7 @@ export function analyzeLocalSentiment(text) {
     keywords: [...new Set([...extractedKeywords, ...significantWords])].slice(0, 10),
     clarity,
     concerns,
-    summary: `Patient appears ${emotion}. Sentiment score: ${Math.round(score * 100)}%.${concerns.length > 0 ? ` ${concerns.length} concern(s) noted.` : ''}`
+    summary: `Attendee appears ${emotion}. Sentiment score: ${Math.round(score * 100)}%.${concerns.length > 0 ? ` ${concerns.length} concern(s) noted.` : ''}`
   };
 }
 

@@ -227,16 +227,16 @@ export function isApiConfigured() {
 // ============================================
 
 const MOCK_RESPONSES = [
-  "That's such a lovely thought! 🌸 Tell me, what does that remind you of?",
-  "How wonderful! I can almost picture it. What sounds do you remember from that time?",
-  "That sounds like a really special memory. Who was with you? 💛",
-  "Take your time — there's no rush at all. What feels most vivid about that?",
-  "I love hearing about this! What was the weather like that day? ☀️",
-  "That's so interesting! What was your favorite part about it?",
-  "What a beautiful memory to share. Does it remind you of anyone special?",
-  "How sweet! Was there a particular smell or taste that goes with that memory?",
-  "I appreciate you telling me about this. What happened next? 🎵",
-  "That sounds absolutely wonderful. How did it make you feel?"
+  "Based on current crowd data, the **North Food Court** has the shortest wait at ~5 minutes. 🍔",
+  "Gate B is currently at 45% capacity — a great time to head that way! 🚪",
+  "The restrooms near Section 12 have the shortest queue right now — about 3 minutes. 🚻",
+  "I'd recommend taking the East Concourse to avoid the congestion near the main stage. 🗺️",
+  "Parking Lot C still has available spots and is closest to Exit 4. 🚗",
+  "The merchandise stand at Gate D has no line right now — perfect time to grab some gear! 🎪",
+  "Current wait at the main food court is about 12 minutes. The satellite kiosk near Section 8 is much faster at 4 minutes.",
+  "Zone A is at 78% capacity and rising. I'd suggest visiting during the halftime break for a better experience.",
+  "The first aid station is located near Gate A, Level 1. Would you like directions? 🏥",
+  "Great question! The event schedule shows the next performance starts in 25 minutes at the South Stage. ⏱️"
 ];
 
 function getMockMayaResponse(message) {
@@ -264,7 +264,7 @@ function getMockSentiment(text) {
     keywords: text.split(' ').filter(w => w.length > 4).slice(0, 5),
     clarity: Math.floor(50 + Math.random() * 40),
     concerns: [],
-    summary: `Patient appears ${emotions[closestKey]} during this entry.`
+    summary: `Attendee appears ${emotions[closestKey]} based on feedback analysis.`
   };
 }
 
@@ -281,7 +281,7 @@ function getMockClarity(text) {
   return {
     score: structure + coherence + specificity + engagement,
     breakdown: { structure, coherence, specificity, engagement },
-    notes: "Assessment generated from text analysis."
+    notes: "Assessment generated from venue feedback analysis."
   };
 }
 
@@ -295,3 +295,4 @@ function getMockMemories(text) {
     sensoryDetails: []
   };
 }
+
