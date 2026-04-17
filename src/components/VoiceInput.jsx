@@ -1,11 +1,12 @@
-import React, { useState, useCallback, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { startListening, stopListening, isSpeechSupported } from '../utils/speech';
+
+const IS_SPEECH_SUPPORTED = isSpeechSupported();
 
 export default function VoiceInput({ onTranscript, onFinalTranscript, disabled }) {
   const [isRecording, setIsRecording] = useState(false);
   const [interimText, setInterimText] = useState('');
   const [error, setError] = useState(null);
-  const supported = useRef(isSpeechSupported());
 
   const handleToggle = useCallback(() => {
     if (isRecording) {
@@ -44,7 +45,7 @@ export default function VoiceInput({ onTranscript, onFinalTranscript, disabled }
     };
   }, []);
 
-  if (!supported.current) {
+  if (!IS_SPEECH_SUPPORTED) {
     return (
       <button
         className="voice-btn"

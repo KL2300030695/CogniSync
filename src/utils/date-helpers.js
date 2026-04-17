@@ -45,7 +45,6 @@ export function formatChartDate(timestamp) {
  * Format full date and time
  */
 export function formatDateTime(timestamp) {
-  const date = new Date(timestamp);
   return `${formatDate(timestamp)} at ${formatTime(timestamp)}`;
 }
 

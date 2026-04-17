@@ -14,8 +14,8 @@ const TREND_ICON = { rising: '↑', stable: '→', falling: '↓' };
 const TREND_COLOR = { rising: 'var(--risk-high)', stable: 'var(--txt-secondary)', falling: 'var(--risk-low)' };
 
 export default function StaffDashboard() {
-  const [zones, setZones]       = useState([]);
-  const [stats, setStats]       = useState(null);
+  const [zones, setZones]       = useState(() => getLiveZoneData());
+  const [stats, setStats]       = useState(() => getVenueStats(getLiveZoneData()));
   const [alerts, setAlerts]     = useState(ALERTS);
   const [analysis, setAnalysis] = useState(null);
   const [loading, setLoading]   = useState(false);
@@ -30,9 +30,8 @@ export default function StaffDashboard() {
   };
 
   useEffect(() => {
-    loadData();
     initFirebase();
-    const interval = setInterval(loadData, 15000); // refresh every 15s
+    const interval = setInterval(loadData, 15000);
     return () => clearInterval(interval);
   }, []);
 

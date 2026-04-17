@@ -239,7 +239,7 @@ const MOCK_RESPONSES = [
   "Great question! The event schedule shows the next performance starts in 25 minutes at the South Stage. ⏱️"
 ];
 
-function getMockMayaResponse(message) {
+function getMockMayaResponse() {
   const idx = Math.floor(Math.random() * MOCK_RESPONSES.length);
   return MOCK_RESPONSES[idx];
 }

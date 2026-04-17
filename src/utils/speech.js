@@ -93,7 +93,7 @@ export function stopListening() {
   if (recognition) {
     try {
       recognition.stop();
-    } catch (e) {
+    } catch {
       // Already stopped
     }
     isListening = false;

@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { formatTime, formatDate, formatChartDate, formatDateTime, isSameDay, getRelativeTime, getGreeting, getLastNDays } from '../utils/date-helpers';
+import { formatTime, formatDate, formatChartDate, isSameDay, getRelativeTime, getGreeting, getLastNDays } from '../utils/date-helpers';
 
 describe('Date Helpers', () => {
   describe('formatTime', () => {

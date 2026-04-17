@@ -68,6 +68,7 @@ describe('Storage Utilities', () => {
     it('should filter entries by date range', () => {
       const now = new Date();
       const entry = saveJournalEntry({ venueText: 'Today' });
+      expect(entry.id).toBeDefined();
 
       const tomorrow = new Date(now);
       tomorrow.setDate(tomorrow.getDate() + 1);
