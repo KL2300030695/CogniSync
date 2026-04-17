@@ -1,15 +1,35 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import LandingPage from './pages/LandingPage';
 import PatientJournal from './pages/PatientJournal';
 import FamilyDashboard from './pages/FamilyDashboard';
 import CognitiveExercises from './pages/CognitiveExercises';
 import Settings from './pages/Settings';
+import { trackPageView } from './services/google-services';
+
+// Google Analytics page tracking
+function PageTracker() {
+  const location = useLocation();
+  
+  useEffect(() => {
+    const pageNames = {
+      '/': 'Home',
+      '/journal': 'Patient Journal',
+      '/dashboard': 'Family Dashboard',
+      '/exercises': 'Cognitive Exercises',
+      '/settings': 'Settings',
+    };
+    trackPageView(pageNames[location.pathname] || 'Unknown', location.pathname);
+  }, [location]);
+
+  return null;
+}
 
 export default function App() {
   return (
     <Router>
+      <PageTracker />
       <Navbar />
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
         <Routes>
