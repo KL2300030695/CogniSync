@@ -267,10 +267,10 @@ src/
 │
 ├── pages/
 │   ├── LandingPage.jsx          # EventFlow hero + feature showcase
-│   ├── PatientJournal.jsx       # Attendee AI companion chat
-│   ├── FamilyDashboard.jsx      # Staff operations dashboard
-│   ├── CognitiveExercises.jsx   # Venue facility management tools
-│   └── Settings.jsx             # Event configuration
+│   ├── AttendeePage.jsx         # AI attendee assistant chat
+│   ├── StaffDashboard.jsx       # Staff operations dashboard
+│   ├── QueueMonitor.jsx         # Real-time queue intelligence
+│   └── VenueSettings.jsx       # Event and API configuration
 │
 ├── utils/
 │   ├── storage.js               # Full JSDoc, localStorage + Firebase sync
