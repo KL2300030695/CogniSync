@@ -2,27 +2,24 @@ import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import LandingPage from './pages/LandingPage';
-import PatientJournal from './pages/PatientJournal';
-import FamilyDashboard from './pages/FamilyDashboard';
-import CognitiveExercises from './pages/CognitiveExercises';
-import Settings from './pages/Settings';
+import AttendeePage from './pages/AttendeePage';
+import StaffDashboard from './pages/StaffDashboard';
+import QueueMonitor from './pages/QueueMonitor';
+import VenueSettings from './pages/VenueSettings';
 import { trackPageView } from './services/google-services';
 
-// Google Analytics page tracking
 function PageTracker() {
   const location = useLocation();
-  
   useEffect(() => {
-    const pageNames = {
-      '/': 'Home',
-      '/journal': 'Patient Journal',
-      '/dashboard': 'Family Dashboard',
-      '/exercises': 'Cognitive Exercises',
-      '/settings': 'Settings',
+    const names = {
+      '/':          'Home — EventFlow AI',
+      '/attendee':  'AI Attendee Assistant',
+      '/dashboard': 'Staff Operations Dashboard',
+      '/queues':    'Queue Monitor',
+      '/settings':  'Venue Settings',
     };
-    trackPageView(pageNames[location.pathname] || 'Unknown', location.pathname);
+    trackPageView(names[location.pathname] || 'EventFlow AI', location.pathname);
   }, [location]);
-
   return null;
 }
 
@@ -31,15 +28,13 @@ export default function App() {
     <Router>
       <PageTracker />
       <Navbar />
-      <main style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/journal" element={<PatientJournal />} />
-          <Route path="/dashboard" element={<FamilyDashboard />} />
-          <Route path="/exercises" element={<CognitiveExercises />} />
-          <Route path="/settings" element={<Settings />} />
-        </Routes>
-      </main>
+      <Routes>
+        <Route path="/"          element={<LandingPage />}    />
+        <Route path="/attendee"  element={<AttendeePage />}   />
+        <Route path="/dashboard" element={<StaffDashboard />} />
+        <Route path="/queues"    element={<QueueMonitor />}   />
+        <Route path="/settings"  element={<VenueSettings />}  />
+      </Routes>
     </Router>
   );
 }

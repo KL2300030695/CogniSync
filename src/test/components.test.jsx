@@ -14,16 +14,14 @@ describe('Component Rendering', () => {
   describe('Navbar', () => {
     it('should render logo', () => {
       render(<MemoryRouter><Navbar /></MemoryRouter>);
-      expect(screen.getByText('CogniSync')).toBeInTheDocument();
+      expect(screen.getByText(/EventFlow/i)).toBeInTheDocument();
     });
 
     it('should render navigation links', () => {
       render(<MemoryRouter><Navbar /></MemoryRouter>);
-      expect(screen.getByText('Home')).toBeInTheDocument();
-      expect(screen.getByText('Journal')).toBeInTheDocument();
-      expect(screen.getByText('Family Dashboard')).toBeInTheDocument();
-      expect(screen.getByText('Exercises')).toBeInTheDocument();
-      expect(screen.getByText('Settings')).toBeInTheDocument();
+      expect(screen.getByText(/AI Assistant/i)).toBeInTheDocument();
+      expect(screen.getByText(/Staff Dashboard/i)).toBeInTheDocument();
+      expect(screen.getByText(/Queue Monitor/i)).toBeInTheDocument();
     });
 
     it('should have accessible navigation landmark', () => {

@@ -1,53 +1,46 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
-  const location = useLocation();
-  
-  const isDashboard = location.pathname === '/dashboard';
-
-  const links = [
-    { to: '/', label: 'Home', icon: '🏠' },
-    { to: '/journal', label: 'Journal', icon: '📖' },
-    { to: '/dashboard', label: 'Family Dashboard', icon: '📊' },
-    { to: '/exercises', label: 'Exercises', icon: '🧩' },
-    { to: '/settings', label: 'Settings', icon: '⚙️' },
-  ];
-
   return (
     <nav className="navbar" role="navigation" aria-label="Main navigation">
-      <div className="navbar__inner">
-        <Link to="/" className="navbar__logo" id="nav-logo">
-          <div className="navbar__logo-icon">🧠</div>
-          <span>CogniSync</span>
-        </Link>
+      <NavLink to="/" className="navbar-logo" aria-label="EventFlow AI Home">
+        <div className="navbar-logo-icon" aria-hidden="true">🎪</div>
+        <span>EventFlow <span style={{ color: 'var(--clr-accent)', fontWeight: 300 }}>AI</span></span>
+      </NavLink>
 
-        <ul className={`navbar__links ${isOpen ? 'navbar__links--open' : ''}`} id="nav-links">
-          {links.map(link => (
-            <li key={link.to}>
-              <Link
-                to={link.to}
-                className={`navbar__link ${location.pathname === link.to ? 'navbar__link--active' : ''}`}
-                onClick={() => setIsOpen(false)}
-                id={`nav-link-${link.label.toLowerCase().replace(/\s/g, '-')}`}
-              >
-                <span style={{ marginRight: '6px' }}>{link.icon}</span>
-                {link.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-
-        <button
-          className="navbar__mobile-toggle"
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle navigation menu"
-          id="nav-mobile-toggle"
-        >
-          {isOpen ? '✕' : '☰'}
-        </button>
+      <div className="navbar-live" aria-live="polite" aria-label="System status: live monitoring">
+        <div className="navbar-live-dot" aria-hidden="true" />
+        LIVE MONITORING
       </div>
+
+      <ul className="navbar-nav" role="list">
+        <li>
+          <NavLink to="/" end className={({isActive}) => isActive ? 'active' : ''}>
+            🏠 Home
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/attendee" className={({isActive}) => isActive ? 'active' : ''}>
+            🤖 AI Assistant
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/dashboard" className={({isActive}) => isActive ? 'active' : ''}>
+            📊 Staff Dashboard
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/queues" className={({isActive}) => isActive ? 'active' : ''}>
+            ⏱️ Queue Monitor
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="/settings" className={({isActive}) => isActive ? 'active' : ''}>
+            ⚙️ Settings
+          </NavLink>
+        </li>
+      </ul>
     </nav>
   );
 }

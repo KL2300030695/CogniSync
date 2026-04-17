@@ -5,7 +5,7 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Content Security Policy — prevents XSS, restricts resource origins -->
+    <!-- Content Security Policy -->
     <meta
       http-equiv="Content-Security-Policy"
       content="
@@ -26,65 +26,46 @@
         frame-ancestors 'none';
       "
     />
-
-    <!-- Security headers -->
     <meta http-equiv="X-Content-Type-Options" content="nosniff" />
     <meta http-equiv="X-Frame-Options" content="DENY" />
     <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
     <meta http-equiv="Permissions-Policy" content="microphone=(self), camera=(), geolocation=(self)" />
 
     <!-- Primary Meta -->
-    <title>CogniSync — AI Memory Care Companion</title>
-    <meta
-      name="description"
-      content="CogniSync is an AI-powered memory care companion for early-stage Alzheimer's and Dementia patients. Featuring voice-friendly journaling, empathetic AI conversations with Maya, cognitive exercises, and a family caregiver dashboard."
-    />
-    <meta name="keywords" content="dementia, alzheimers, memory care, AI companion, cognitive health, caregiver, CogniSync, Google Gemini" />
-    <meta name="author" content="CogniSync" />
-    <meta name="theme-color" content="#7B61C4" />
+    <title>EventFlow AI — Intelligent Physical Event Experience Optimizer</title>
+    <meta name="description" content="EventFlow AI uses Google Gemini to optimize crowd management, predict wait times, and provide real-time navigation for stadiums, conferences, and festivals." />
+    <meta name="keywords" content="event management, crowd control, venue AI, wait time prediction, stadium technology, event experience, Google Gemini, Firebase" />
+    <meta name="author" content="EventFlow AI" />
+    <meta name="theme-color" content="#2D7DD2" />
     <meta name="robots" content="index, follow" />
 
     <!-- Open Graph -->
-    <meta property="og:title" content="CogniSync — AI Memory Care Companion" />
-    <meta property="og:description" content="A gentle AI companion for dementia care. Voice-friendly journaling, cognitive exercises, and family health tracking." />
+    <meta property="og:title" content="EventFlow AI — Physical Event Experience Optimizer" />
+    <meta property="og:description" content="AI-powered real-time crowd management and attendee navigation for large-scale events." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://cogni-sync-pied.vercel.app" />
 
-    <!-- Twitter Card -->
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="CogniSync — AI Memory Care Companion" />
-    <meta name="twitter:description" content="Empathetic AI companion for dementia patients. Powered by Google Gemini." />
+    <meta name="twitter:title" content="EventFlow AI — Physical Event Experience Optimizer" />
+    <meta name="twitter:description" content="Real-time crowd management powered by Google Gemini and Firebase." />
 
-    <!-- Google Fonts (Inter + Merriweather) -->
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300;1,400&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap"
     />
 
-    <!-- Skip to content (accessibility) -->
+    <!-- Skip-to-content -->
     <style>
-      .skip-link {
-        position: absolute;
-        top: -40px;
-        left: 0;
-        background: #7B61C4;
-        color: white;
-        padding: 8px 16px;
-        text-decoration: none;
-        border-radius: 0 0 4px 0;
-        font-family: Inter, sans-serif;
-        z-index: 10000;
-        transition: top 0.2s;
-      }
-      .skip-link:focus { top: 0; }
+      .skip-link { position:absolute; top:-40px; left:0; background:#2D7DD2; color:#fff; padding:8px 16px; text-decoration:none; border-radius:0 0 4px 0; font-family:Inter,sans-serif; z-index:10000; transition:top .2s; }
+      .skip-link:focus { top:0; }
     </style>
   </head>
   <body>
-    <!-- Accessibility: skip navigation for keyboard/screen reader users -->
     <a class="skip-link" href="#main-content">Skip to main content</a>
-
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

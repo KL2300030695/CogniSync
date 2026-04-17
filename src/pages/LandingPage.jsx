@@ -1,203 +1,144 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+const FEATURES = [
+  { icon: '🧠', title: 'AI Crowd Intelligence', desc: 'Google Gemini analyzes real-time occupancy across all venue zones, predicting congestion 30 minutes before it happens.' },
+  { icon: '⏱️', title: 'Wait-Time Prediction', desc: 'ML-powered queue forecasting for food courts, restrooms, entrances, and exits — with optimal visit window recommendations.' },
+  { icon: '🗺️', title: 'Smart Navigation', desc: 'Crowd-aware routing guides attendees through the least congested paths, updating in real time as conditions change.' },
+  { icon: '🚨', title: 'Safety Alert System', desc: 'Automatic alerts when zones exceed safety thresholds. Staff get specific, actionable interventions — not just data.' },
+  { icon: '📊', title: 'Operations Dashboard', desc: 'Real-time visibility across all venue zones on a single screen. Filter by risk level, category, or trend direction.' },
+  { icon: '🔗', title: 'Firebase Real-Time Sync', desc: 'All crowd data, alerts, and analytics synced instantly across every staff device via Firebase Firestore.' },
+];
+
+const STEPS = [
+  { label: 'Sense', title: 'Real-Time Zone Monitoring', desc: 'IoT sensors and entry counters feed live occupancy data for every zone into the EventFlow platform.' },
+  { label: 'Analyze', title: 'Google Gemini AI Analysis', desc: 'Gemini processes multi-zone data simultaneously, identifies patterns, predicts peak times, and generates crowd risk scores.' },
+  { label: 'Act', title: 'Intelligent Recommendations', desc: 'Staff receive specific interventions (open Gate D, activate overflow counter). Attendees get personalized navigation via the AI assistant.' },
+  { label: 'Learn', title: 'Continuous Improvement', desc: 'Every event builds a richer historical dataset, making predictions more accurate for future events at the same venue.' },
+];
+
 export default function LandingPage() {
   return (
-    <div className="page-enter">
-      {/* Hero Section */}
-      <section className="hero">
-        <div className="hero__bg"></div>
-        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', position: 'relative', zIndex: 1 }}>
-          <div className="hero__content">
-            <div className="hero__badge">
-              <span>🧠</span>
-              <span>AI-Powered Memory Care</span>
-            </div>
-            <h1 className="heading-xl hero__title">
-              Gentle AI companion for{' '}
-              <span className="text-gradient">memory care</span>
-            </h1>
-            <p className="hero__subtitle">
-              CogniSync helps families caring for loved ones with early-stage Alzheimer's and Dementia. 
-              Our AI companion Maya provides warm, patient conversations while tracking cognitive health over time.
-            </p>
-            <div className="hero__actions">
-              <Link to="/journal" className="btn btn-primary btn-lg" id="hero-start-journal">
-                📖 Start Journaling
-              </Link>
-              <Link to="/dashboard" className="btn btn-secondary btn-lg" id="hero-view-dashboard">
-                📊 Family Dashboard
-              </Link>
-            </div>
+    <main id="main-content">
+      {/* Hero */}
+      <section className="landing-hero" aria-label="Hero section">
+        <div className="hero-bg" aria-hidden="true" />
+        <div className="hero-grid-lines" aria-hidden="true" />
+
+        <div className="hero-content">
+          <div className="hero-badge">
+            <span>🎪</span>
+            PromptWars Virtual · Physical Event Experience Challenge
           </div>
 
-          {/* Animated Brain Visual */}
-          <div className="hero__visual">
-            <div className="brain-orb">
-              <div className="brain-orb__circle brain-orb__circle--1"></div>
-              <div className="brain-orb__circle brain-orb__circle--2"></div>
-              <div className="brain-orb__circle brain-orb__circle--3"></div>
-              <div className="brain-orb__emoji">🧠</div>
-              <div className="brain-orb__particle"></div>
-              <div className="brain-orb__particle"></div>
-              <div className="brain-orb__particle"></div>
-              <div className="brain-orb__particle"></div>
-              <div className="brain-orb__particle"></div>
-            </div>
-          </div>
-        </div>
-      </section>
+          <h1 className="hero-title">
+            Optimize Every<br />
+            <span className="hero-title-grad">Event Experience</span><br />
+            with AI
+          </h1>
 
-      {/* Stats Section */}
-      <section className="stats">
-        <div className="container">
-          <div className="stats__grid">
-            <div className="stat-card" style={{ animation: 'fadeInUp 0.5s ease 0.1s both' }}>
-              <div className="stat-card__number text-gradient">55M+</div>
-              <div className="stat-card__label">People living with dementia worldwide</div>
+          <p className="hero-sub">
+            EventFlow AI transforms chaotic stadium and venue crowd management into a proactive, 
+            data-driven experience — powered by Google Gemini, Firebase, and real-time analytics.
+          </p>
+
+          <div className="hero-ctas">
+            <Link to="/attendee" className="btn btn-primary btn-lg">
+              🤖 Try AI Assistant
+            </Link>
+            <Link to="/dashboard" className="btn btn-ghost btn-lg">
+              📊 Staff Dashboard →
+            </Link>
+          </div>
+
+          <div className="hero-stats" role="list" aria-label="Impact statistics">
+            <div className="hero-stat" role="listitem">
+              <div className="hero-stat-num">52K</div>
+              <div className="hero-stat-label">Attendees Managed</div>
             </div>
-            <div className="stat-card" style={{ animation: 'fadeInUp 0.5s ease 0.2s both' }}>
-              <div className="stat-card__number text-gradient">70%</div>
-              <div className="stat-card__label">Caregivers report feeling overwhelmed</div>
+            <div className="hero-stat" role="listitem">
+              <div className="hero-stat-num">12</div>
+              <div className="hero-stat-label">Venue Zones Monitored</div>
             </div>
-            <div className="stat-card" style={{ animation: 'fadeInUp 0.5s ease 0.3s both' }}>
-              <div className="stat-card__number text-gradient">∞</div>
-              <div className="stat-card__label">Patience of our AI companion Maya</div>
-            </div>
-            <div className="stat-card" style={{ animation: 'fadeInUp 0.5s ease 0.4s both' }}>
-              <div className="stat-card__number text-gradient">100%</div>
-              <div className="stat-card__label">Private — all data stays on your device</div>
+            <div className="hero-stat" role="listitem">
+              <div className="hero-stat-num">30m</div>
+              <div className="hero-stat-label">Congestion Prediction</div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="features section">
-        <div className="container">
-          <div className="section__header">
-            <h2 className="heading-lg">How CogniSync <span className="text-gradient">helps</span></h2>
-            <p className="section__subtitle">
-              Built with deep empathy and cutting-edge AI to support both patients and their families.
-            </p>
-          </div>
+      {/* Features */}
+      <section className="features-section" aria-labelledby="features-heading">
+        <p className="section-label">Core Capabilities</p>
+        <h2 className="section-title" id="features-heading">Everything You Need to Run a Flawless Event</h2>
+        <p className="section-sub">From real-time crowd heatmaps to AI-generated staff interventions — all in one platform.</p>
 
-          <div className="features__grid">
-            <div className="feature-card" style={{ animation: 'fadeInUp 0.5s ease 0.1s both' }}>
-              <div className="feature-card__icon feature-card__icon--lavender">🎤</div>
-              <h3 className="feature-card__title">Voice-Friendly Journal</h3>
-              <p className="feature-card__desc">
-                Speak naturally — Maya listens with infinite patience. No typing needed. 
-                The conversation flows like talking to a caring friend.
-              </p>
-            </div>
-
-            <div className="feature-card" style={{ animation: 'fadeInUp 0.5s ease 0.2s both' }}>
-              <div className="feature-card__icon feature-card__icon--sage">🧠</div>
-              <h3 className="feature-card__title">Empathetic AI Companion</h3>
-              <p className="feature-card__desc">
-                Maya never rushes, never judges, and never corrects. She gently encourages 
-                memory recall through warm, sensory-rich conversations.
-              </p>
-            </div>
-
-            <div className="feature-card" style={{ animation: 'fadeInUp 0.5s ease 0.3s both' }}>
-              <div className="feature-card__icon feature-card__icon--coral">📊</div>
-              <h3 className="feature-card__title">Family Dashboard</h3>
-              <p className="feature-card__desc">
-                Track sentiment trends, cognitive clarity, and keyword patterns over time. 
-                Get gentle alerts when concerning patterns emerge.
-              </p>
-            </div>
-
-            <div className="feature-card" style={{ animation: 'fadeInUp 0.5s ease 0.4s both' }}>
-              <div className="feature-card__icon feature-card__icon--rose">🧩</div>
-              <h3 className="feature-card__title">Cognitive Exercises</h3>
-              <p className="feature-card__desc">
-                Gentle, non-frustrating memory games that adapt to the patient's comfort level.
-                Word associations, story continuation, and sensory exploration.
-              </p>
-            </div>
-
-            <div className="feature-card" style={{ animation: 'fadeInUp 0.5s ease 0.5s both' }}>
-              <div className="feature-card__icon feature-card__icon--lavender">🔒</div>
-              <h3 className="feature-card__title">Complete Privacy</h3>
-              <p className="feature-card__desc">
-                All conversations and data stay on your device. No cloud storage, no data mining. 
-                Export your data anytime in standard JSON format.
-              </p>
-            </div>
-
-            <div className="feature-card" style={{ animation: 'fadeInUp 0.5s ease 0.6s both' }}>
-              <div className="feature-card__icon feature-card__icon--sage">💡</div>
-              <h3 className="feature-card__title">Smart Insights</h3>
-              <p className="feature-card__desc">
-                AI-powered analysis detects mood changes, clarity fluctuations, and potential 
-                red flags — empowering families to act early.
-              </p>
-            </div>
-          </div>
+        <div className="grid-3">
+          {FEATURES.map((f, i) => (
+            <article key={i} className="feature-card">
+              <div className="feature-icon" aria-hidden="true">{f.icon}</div>
+              <h3 className="feature-title">{f.title}</h3>
+              <p className="feature-desc">{f.desc}</p>
+            </article>
+          ))}
         </div>
       </section>
 
-      {/* How It Works */}
-      <section className="section section--alt">
-        <div className="container">
-          <div className="section__header">
-            <h2 className="heading-lg">Getting started is <span className="text-gradient">simple</span></h2>
-            <p className="section__subtitle">Three simple steps to begin your memory care journey.</p>
-          </div>
+      {/* How it works */}
+      <section className="how-section" aria-labelledby="how-heading">
+        <p className="section-label">How It Works</p>
+        <h2 className="section-title" id="how-heading">The EventFlow Intelligence Loop</h2>
+        <p className="section-sub">A closed-loop system that senses, analyzes, acts, and learns — continuously.</p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: 'var(--space-xl)', maxWidth: '900px', margin: '0 auto' }}>
-            {[
-              { step: '1', emoji: '👤', title: 'Set up a profile', desc: 'Enter your loved one\'s name, interests, and important memories to personalize Maya\'s conversations.' },
-              { step: '2', emoji: '💬', title: 'Start a journal session', desc: 'Speak or type — Maya will respond with warmth, gently encouraging memory recall and cognitive engagement.' },
-              { step: '3', emoji: '📈', title: 'Track progress', desc: 'Check the family dashboard for sentiment trends, clarity scores, and AI-generated insights about cognitive health.' },
-            ].map((item, i) => (
-              <div key={i} className="glass-card text-center" style={{ animation: `fadeInUp 0.5s ease ${0.2 + i * 0.15}s both` }}>
-                <div style={{
-                  width: '48px', height: '48px', borderRadius: 'var(--radius-full)',
-                  background: 'linear-gradient(135deg, var(--lavender-400), var(--lavender-600))',
-                  color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  fontWeight: 700, fontSize: '1.2rem', margin: '0 auto var(--space-md)',
-                }}>
-                  {item.step}
-                </div>
-                <div style={{ fontSize: '2rem', marginBottom: 'var(--space-sm)' }}>{item.emoji}</div>
-                <h3 className="heading-sm" style={{ marginBottom: 'var(--space-sm)' }}>{item.title}</h3>
-                <p className="text-muted">{item.desc}</p>
+        <div className="steps" role="list">
+          {STEPS.map((s, i) => (
+            <div key={i} className="step" role="listitem">
+              <div className="step-num" aria-hidden="true">{s.label}</div>
+              <div>
+                <div className="step-title">{s.title}</div>
+                <div className="step-desc">{s.desc}</div>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Google Services */}
+      <section className="features-section" aria-labelledby="tech-heading">
+        <p className="section-label">Powered By</p>
+        <h2 className="section-title" id="tech-heading">Google Services Integration</h2>
+        <div className="grid-3">
+          {[
+            { icon: '🧠', name: 'Google Gemini AI', desc: 'Natural language crowd analysis, navigation guidance, and staff recommendations.' },
+            { icon: '🔥', name: 'Firebase Firestore', desc: 'Real-time data sync across all staff devices with offline persistence.' },
+            { icon: '🗺️', name: 'Google Maps Places', desc: 'Venue navigation, parking guidance, and nearby facility discovery.' },
+            { icon: '📈', name: 'Google Analytics 4', desc: 'Anonymized usage tracking and operational performance insights.' },
+            { icon: '🔊', name: 'Google Cloud TTS', desc: 'Audio crowd advisories for accessibility and PA system integration.' },
+            { icon: '🔤', name: 'Google Fonts', desc: 'Inter & Space Grotesk for high-legibility, professional venue display.' },
+          ].map((s, i) => (
+            <article key={i} className="feature-card">
+              <div className="feature-icon" aria-hidden="true">{s.icon}</div>
+              <h3 className="feature-title">{s.name}</h3>
+              <p className="feature-desc">{s.desc}</p>
+            </article>
+          ))}
         </div>
       </section>
 
       {/* CTA */}
-      <section className="section" style={{ textAlign: 'center' }}>
-        <div className="container container-sm">
-          <h2 className="heading-lg" style={{ marginBottom: 'var(--space-md)' }}>
-            Every conversation <span className="text-gradient">matters</span>
-          </h2>
-          <p className="text-lg text-muted" style={{ marginBottom: 'var(--space-xl)', maxWidth: '500px', margin: '0 auto var(--space-xl)' }}>
-            Start today. Give your loved one the gift of a patient, caring AI companion 
-            who will always listen.
-          </p>
-          <Link to="/journal" className="btn btn-primary btn-lg" id="cta-start-journal">
-            🌸 Begin Your First Session
-          </Link>
+      <section className="cta-section" aria-labelledby="cta-heading">
+        <h2 id="cta-heading" className="section-title" style={{ marginBottom: 'var(--sp-4)' }}>
+          Ready to Transform Your Event?
+        </h2>
+        <p className="section-sub" style={{ marginBottom: 'var(--sp-8)' }}>
+          Try the live AI assistant or explore the staff operations dashboard.
+        </p>
+        <div className="hero-ctas">
+          <Link to="/attendee" className="btn btn-primary btn-lg">🤖 Open AI Assistant</Link>
+          <Link to="/dashboard" className="btn btn-accent btn-lg">📊 View Live Dashboard</Link>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="footer">
-        <div className="container">
-          <p>🧠 CogniSync — AI-Powered Memory Care Companion</p>
-          <p style={{ marginTop: 'var(--space-xs)' }}>
-            Built with empathy, powered by Google Gemini AI.
-            All data stays on your device. ❤️
-          </p>
-        </div>
-      </footer>
-    </div>
+    </main>
   );
 }
