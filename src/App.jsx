@@ -1,3 +1,8 @@
+/**
+ * EventFlow AI — Root application component.
+ * Configures client-side routing and Google Analytics page tracking.
+ * @module App
+ */
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';

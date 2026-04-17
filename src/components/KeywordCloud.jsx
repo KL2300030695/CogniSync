@@ -1,4 +1,10 @@
+/**
+ * KeywordCloud component — visualizes frequently mentioned keywords.
+ * Size and color scale with frequency count.
+ * @module components/KeywordCloud
+ */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const COLORS = [
   { bg: '#F3E8FF', text: '#7B61C4' },
@@ -11,6 +17,10 @@ const COLORS = [
   { bg: '#EDE7F6', text: '#5E35B1' },
 ];
 
+/**
+ * @param {Object} props
+ * @param {Array<{word: string, count: number}>} [props.keywords=[]] - Keyword frequency data
+ */
 export default function KeywordCloud({ keywords = [] }) {
   if (keywords.length === 0) {
     return (
@@ -50,3 +60,12 @@ export default function KeywordCloud({ keywords = [] }) {
     </div>
   );
 }
+
+KeywordCloud.propTypes = {
+  keywords: PropTypes.arrayOf(
+    PropTypes.shape({
+      word: PropTypes.string.isRequired,
+      count: PropTypes.number.isRequired,
+    })
+  ),
+};

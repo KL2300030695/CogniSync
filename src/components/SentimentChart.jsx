@@ -1,4 +1,10 @@
+/**
+ * SentimentChart component — dual-line chart showing sentiment and clarity trends.
+ * Uses Chart.js via react-chartjs-2 for responsive, interactive visualization.
+ * @module components/SentimentChart
+ */
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -136,3 +142,14 @@ export default function SentimentChart({ data, height = 300 }) {
     </div>
   );
 }
+
+SentimentChart.propTypes = {
+  data: PropTypes.arrayOf(
+    PropTypes.shape({
+      date: PropTypes.string.isRequired,
+      score: PropTypes.number.isRequired,
+      clarity: PropTypes.number,
+    })
+  ),
+  height: PropTypes.number,
+};
