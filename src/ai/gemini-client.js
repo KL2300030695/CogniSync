@@ -1,5 +1,5 @@
 /**
- * CogniSync Gemini Client
+ * EventFlow AI Gemini Client
  * Wrapper for Google Gemini API with fallback to mock responses.
  */
 

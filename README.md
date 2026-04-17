@@ -286,8 +286,8 @@ src/
 ## 🚀 Getting Started
 
 ```bash
-git clone https://github.com/KL2300030695/CogniSync.git
-cd CogniSync
+git clone https://github.com/KL2300030695/CogniSync.git eventflow-ai
+cd eventflow-ai
 npm install
 cp .env.example .env
 # Add your Gemini API key

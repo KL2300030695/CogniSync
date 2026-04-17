@@ -1,6 +1,6 @@
 /**
- * CogniSync Web Speech API Helpers
- * Voice input/output for patient-friendly interaction
+ * EventFlow AI Web Speech API Helpers
+ * Voice input/output for hands-free attendee interaction
  */
 
 let recognition = null;

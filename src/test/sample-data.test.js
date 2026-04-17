@@ -53,12 +53,12 @@ describe('Sample Data', () => {
       const loaded = loadSampleData();
       expect(loaded).toBe(true);
 
-      const stored = JSON.parse(localStorage.getItem('cognisync_journal_entries'));
+      const stored = JSON.parse(localStorage.getItem('eventflow_journal_entries'));
       expect(stored.length).toBe(SAMPLE_ENTRIES.length);
     });
 
     it('should not overwrite existing data', () => {
-      localStorage.setItem('cognisync_journal_entries', JSON.stringify([{ id: 'existing' }]));
+      localStorage.setItem('eventflow_journal_entries', JSON.stringify([{ id: 'existing' }]));
       const loaded = loadSampleData();
       expect(loaded).toBe(false);
     });
@@ -75,7 +75,7 @@ describe('Sample Data', () => {
     });
 
     it('should return false for non-demo data', () => {
-      localStorage.setItem('cognisync_journal_entries', JSON.stringify([{ id: 'real_1' }]));
+      localStorage.setItem('eventflow_journal_entries', JSON.stringify([{ id: 'real_1' }]));
       expect(hasSampleData()).toBe(false);
     });
   });

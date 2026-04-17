@@ -1,6 +1,6 @@
 /**
- * CogniSync Sentiment Analyzer
- * Client-side keyword-based sentiment analysis (backup for when API is unavailable).
+ * EventFlow AI Sentiment Analyzer
+ * Client-side keyword-based sentiment analysis for attendee feedback.
  */
 
 const POSITIVE_WORDS = new Set([

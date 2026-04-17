@@ -1,11 +1,11 @@
 /**
- * CogniSync — localStorage Persistence Layer
+ * EventFlow AI — localStorage Persistence Layer
  *
- * All patient data is stored locally on-device by default.
+ * All event data is stored locally on-device by default.
  * No data is transmitted without explicit user consent (Firebase opt-in).
  *
  * Key design decisions:
- *  - Storage keys are namespaced with 'cognisync_' prefix to avoid collisions
+ *  - Storage keys are namespaced with 'eventflow_' prefix to avoid collisions
  *  - All reads are wrapped in try/catch to handle corrupted storage gracefully
  *  - Default values are always returned when data is missing
  *  - Timestamps are ISO 8601 strings for cross-platform compatibility
@@ -15,10 +15,10 @@
 
 /** @type {Object.<string, string>} Namespaced localStorage keys */
 const STORAGE_KEYS = {
-  JOURNAL_ENTRIES:  'cognisync_journal_entries',
-  PATIENT_PROFILE:  'cognisync_patient_profile',
-  SETTINGS:         'cognisync_settings',
-  EXERCISE_RESULTS: 'cognisync_exercise_results',
+  JOURNAL_ENTRIES:  'eventflow_session_logs',
+  PATIENT_PROFILE:  'eventflow_venue_profile',
+  SETTINGS:         'eventflow_settings',
+  EXERCISE_RESULTS: 'eventflow_facility_results',
 };
 
 // ─────────────────────────────────────────────
@@ -347,7 +347,7 @@ export function importData(jsonString) {
 }
 
 /**
- * Remove all CogniSync data from localStorage.
+ * Remove all EventFlow AI data from localStorage.
  * Irreversible — used from Settings page with user confirmation.
  *
  * @returns {void}

@@ -108,9 +108,9 @@ export const SAMPLE_ENTRIES = [
  * Load sample entries into localStorage if empty
  */
 export function loadSampleData() {
-  const existing = localStorage.getItem('cognisync_journal_entries');
+  const existing = localStorage.getItem('eventflow_journal_entries');
   if (!existing || JSON.parse(existing).length === 0) {
-    localStorage.setItem('cognisync_journal_entries', JSON.stringify(SAMPLE_ENTRIES));
+    localStorage.setItem('eventflow_journal_entries', JSON.stringify(SAMPLE_ENTRIES));
     return true;
   }
   return false;
@@ -118,7 +118,7 @@ export function loadSampleData() {
 
 export function hasSampleData() {
   try {
-    const entries = JSON.parse(localStorage.getItem('cognisync_journal_entries') || '[]');
+    const entries = JSON.parse(localStorage.getItem('eventflow_journal_entries') || '[]');
     return entries.some(e => e.id?.startsWith('demo_'));
   } catch {
     return false;

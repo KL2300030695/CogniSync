@@ -1,5 +1,5 @@
 /**
- * CogniSync Input Security Utilities
+ * EventFlow AI Input Security Utilities
  *
  * Provides input validation and sanitization functions to prevent:
  * - Cross-site scripting (XSS) via injected HTML

@@ -1,5 +1,5 @@
 /**
- * CogniSync Date & Time Helpers
+ * EventFlow AI Date & Time Helpers
  */
 
 /**
