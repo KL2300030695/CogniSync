@@ -1,13 +1,13 @@
 /**
- * CogniSync — Google Services Integration Module
+ * EventFlow AI — Google Services Integration Module
  *
- * Integrates 6 Google services:
- *  1. Google Gemini AI         — AI conversation & analysis
- *  2. Google Analytics 4       — anonymized usage tracking (HIPAA-conscious)
- *  3. Firebase Firestore       — optional encrypted cloud backup
- *  4. Firebase Authentication  — anonymous auth for Firestore security
- *  5. Google Maps Places API   — nearby care facility discovery
- *  6. Google Cloud TTS         — enhanced Maya voice (Neural2-F)
+ * Integrates 6 Google services for the Physical Event Experience platform:
+ *  1. Google Analytics 4       — anonymized usage tracking
+ *  2. Firebase Firestore       — real-time crowd data sync across staff devices
+ *  3. Firebase Authentication  — anonymous auth for Firestore security
+ *  4. Google Maps Places API   — venue navigation and nearby facility discovery
+ *  5. Google Cloud TTS         — audio crowd advisories for accessibility
+ *  6. Google Fonts             — high-legibility venue typography (Inter + Space Grotesk)
  *
  * @module google-services
  */
@@ -38,7 +38,6 @@ const GA_MEASUREMENT_ID = import.meta.env.VITE_GA_MEASUREMENT_ID || '';
 /**
  * Initialize Google Analytics 4 with privacy-safe configuration.
  * Only loads if VITE_GA_MEASUREMENT_ID is set.
- * Uses anonymize_ip for HIPAA-conscious tracking.
  */
 export function initGoogleAnalytics() {
   if (!GA_MEASUREMENT_ID) return;
@@ -54,8 +53,8 @@ export function initGoogleAnalytics() {
 
   gtag('js', new Date());
   gtag('config', GA_MEASUREMENT_ID, {
-    page_title: 'CogniSync',
-    anonymize_ip: true,         // HIPAA-conscious: no raw IP stored
+    page_title: 'EventFlow AI',
+    anonymize_ip: true,
     cookie_flags: 'SameSite=None;Secure',
   });
 }
@@ -63,7 +62,7 @@ export function initGoogleAnalytics() {
 /**
  * Track a page view in Google Analytics.
  * @param {string} pageName - Human-readable page name
- * @param {string} pagePath - URL path (e.g. '/journal')
+ * @param {string} pagePath - URL path (e.g. '/dashboard')
  */
 export function trackPageView(pageName, pagePath) {
   if (window.gtag) {
@@ -83,27 +82,27 @@ export function trackEvent(eventName, params = {}) {
   if (window.gtag) {
     window.gtag('event', eventName, {
       ...params,
-      app_name: 'CogniSync',
+      app_name: 'EventFlow AI',
     });
   }
 }
 
-/** Track patient journal session start. */
+/** Track attendee AI assistant session start. */
 export function trackJournalSessionStart() {
-  trackEvent('journal_session_start', {
+  trackEvent('assistant_session_start', {
     event_category: 'engagement',
-    event_label: 'patient_journal',
+    event_label: 'attendee_assistant',
   });
 }
 
 /**
- * Track cognitive exercise completion.
- * @param {string} exerciseType - Exercise ID (e.g. 'word_assoc')
- * @param {string} difficulty - 'easy' | 'medium' | 'hard'
+ * Track venue facility interaction.
+ * @param {string} exerciseType - Facility type (e.g. 'food_court')
+ * @param {string} difficulty - Queue status
  */
 export function trackExerciseCompleted(exerciseType, difficulty) {
-  trackEvent('exercise_completed', {
-    event_category: 'cognitive_exercise',
+  trackEvent('facility_interaction', {
+    event_category: 'venue_facility',
     event_label: exerciseType,
     difficulty,
   });
@@ -118,13 +117,13 @@ export function trackVoiceInputUsed() {
 }
 
 /**
- * Track family dashboard view.
- * @param {number} entriesCount - Number of journal entries visible
+ * Track staff dashboard view.
+ * @param {number} entriesCount - Number of attendees currently tracked
  */
 export function trackDashboardView(entriesCount) {
   trackEvent('dashboard_viewed', {
-    event_category: 'caregiver',
-    event_label: 'family_dashboard',
+    event_category: 'staff_operations',
+    event_label: 'venue_dashboard',
     value: entriesCount,
   });
 }
@@ -156,17 +155,16 @@ export function isFirebaseConfigured() {
 
 /**
  * Initialize Firebase app, Firestore, and anonymous auth.
- * Enables offline persistence so Firestore works without network.
+ * Enables offline persistence so Firestore works at venues with spotty WiFi.
  * @returns {import('firebase/firestore').Firestore|null}
  */
 export async function initFirebase() {
   if (!isFirebaseConfigured()) {
-    console.info('CogniSync: Firebase not configured — using localStorage (privacy-first mode).');
+    console.info('EventFlow AI: Firebase not configured — using localStorage only.');
     return null;
   }
 
   try {
-    // Prevent re-initialization on hot reload
     const app = getApps().length === 0
       ? initializeApp(firebaseConfig)
       : getApps()[0];
@@ -174,7 +172,7 @@ export async function initFirebase() {
     _db = getFirestore(app);
     _auth = getAuth(app);
 
-    // Enable offline persistence (Firestore works without internet)
+    // Enable offline persistence (works when venue WiFi drops)
     try {
       await enableIndexedDbPersistence(_db);
     } catch (err) {
@@ -183,24 +181,23 @@ export async function initFirebase() {
       }
     }
 
-    // Sign in anonymously so Firestore security rules can scope data
+    // Sign in anonymously for Firestore security rules
     await signInAnonymously(_auth);
     onAuthStateChanged(_auth, (user) => { _currentUser = user; });
 
-    console.info('CogniSync: Firebase initialized with offline persistence + anonymous auth.');
+    console.info('EventFlow AI: Firebase initialized with offline persistence + anonymous auth.');
     return _db;
   } catch (error) {
-    console.warn('CogniSync: Firebase init failed, using localStorage fallback.', error.message);
+    console.warn('EventFlow AI: Firebase init failed, using localStorage fallback.', error.message);
     return null;
   }
 }
 
 /**
- * Save a single journal entry to Firestore.
- * Data is scoped under the anonymous user's UID for security.
- * @param {Object} entry - Journal entry object (must have `id` field)
- * @param {string} [patientId='default'] - Patient identifier
- * @returns {Promise<boolean>} - true if saved successfully
+ * Save a single crowd data entry to Firestore.
+ * @param {Object} entry - Data entry (must have `id` field)
+ * @param {string} [patientId='default'] - Event session identifier
+ * @returns {Promise<boolean>}
  */
 export async function saveEntryToFirestore(entry, patientId = 'default') {
   if (!_db || !entry?.id) return false;
@@ -208,20 +205,20 @@ export async function saveEntryToFirestore(entry, patientId = 'default') {
   try {
     const uid = _currentUser?.uid || patientId;
     await setDoc(
-      doc(_db, 'patients', uid, 'journal_entries', entry.id),
+      doc(_db, 'events', uid, 'crowd_data', entry.id),
       { ...entry, syncedAt: new Date().toISOString() }
     );
     return true;
   } catch (error) {
-    console.error('CogniSync: Firestore save error:', error.message);
+    console.error('EventFlow AI: Firestore save error:', error.message);
     return false;
   }
 }
 
 /**
- * Sync multiple journal entries to Firestore.
- * @param {Object[]} entries - Array of journal entries
- * @param {string} [patientId='default'] - Patient identifier
+ * Sync multiple crowd data entries to Firestore.
+ * @param {Object[]} entries - Array of data entries
+ * @param {string} [patientId='default'] - Event session identifier
  * @returns {Promise<boolean>}
  */
 export async function syncToFirestore(entries, patientId = 'default') {
@@ -231,22 +228,22 @@ export async function syncToFirestore(entries, patientId = 'default') {
     const uid = _currentUser?.uid || patientId;
     const writes = entries.map((entry) =>
       setDoc(
-        doc(_db, 'patients', uid, 'journal_entries', entry.id),
+        doc(_db, 'events', uid, 'crowd_data', entry.id),
         { ...entry, syncedAt: new Date().toISOString() }
       )
     );
     await Promise.all(writes);
     return true;
   } catch (error) {
-    console.error('CogniSync: Firestore sync error:', error.message);
+    console.error('EventFlow AI: Firestore sync error:', error.message);
     return false;
   }
 }
 
 /**
- * Fetch all journal entries from Firestore, ordered by timestamp.
- * @param {string} [patientId='default'] - Patient identifier
- * @returns {Promise<Object[]>} - Array of journal entries
+ * Fetch all crowd data entries from Firestore, ordered by timestamp.
+ * @param {string} [patientId='default'] - Event session identifier
+ * @returns {Promise<Object[]>}
  */
 export async function fetchFromFirestore(patientId = 'default') {
   if (!_db) return [];
@@ -254,13 +251,13 @@ export async function fetchFromFirestore(patientId = 'default') {
   try {
     const uid = _currentUser?.uid || patientId;
     const q = query(
-      collection(_db, 'patients', uid, 'journal_entries'),
+      collection(_db, 'events', uid, 'crowd_data'),
       orderBy('timestamp', 'asc')
     );
     const snapshot = await getDocs(q);
     return snapshot.docs.map((d) => d.data());
   } catch (error) {
-    console.error('CogniSync: Firestore fetch error:', error.message);
+    console.error('EventFlow AI: Firestore fetch error:', error.message);
     return [];
   }
 }
@@ -304,7 +301,7 @@ export function loadGoogleMaps() {
 }
 
 /**
- * Search for nearby memory care / dementia care facilities.
+ * Search for nearby venue facilities (parking, transit, food, first aid).
  * Uses Google Maps Places API nearbySearch.
  * @param {number} latitude
  * @param {number} longitude
@@ -318,9 +315,9 @@ export async function findNearbyCareFacilities(latitude, longitude) {
     service.nearbySearch(
       {
         location: { lat: latitude, lng: longitude },
-        radius: 10000,
-        type: 'health',
-        keyword: 'memory care dementia alzheimer',
+        radius: 5000,
+        type: 'point_of_interest',
+        keyword: 'parking transit stadium venue event center',
       },
       (results, status) => {
         if (status === window.google.maps.places.PlacesServiceStatus.OK) {
@@ -351,6 +348,7 @@ const TTS_API_KEY = import.meta.env.VITE_GOOGLE_TTS_KEY || '';
 
 /**
  * Synthesize speech via Google Cloud TTS Neural2-F voice.
+ * Used for audio crowd advisories and accessibility.
  * Falls back silently to browser Speech Synthesis if not configured.
  * @param {string} text - Text to speak aloud
  * @returns {Promise<boolean>} - true if Google TTS was used
@@ -373,8 +371,8 @@ export async function speakWithGoogleTTS(text) {
           },
           audioConfig: {
             audioEncoding: 'MP3',
-            speakingRate: 0.9,   // slightly slower for elderly users
-            pitch: 1.5,          // warmer tone
+            speakingRate: 1.0,
+            pitch: 0.0,
           },
         }),
       }
@@ -389,7 +387,7 @@ export async function speakWithGoogleTTS(text) {
       return true;
     }
   } catch (error) {
-    console.warn('CogniSync: Google TTS unavailable, using browser synthesis.', error.message);
+    console.warn('EventFlow AI: Google TTS unavailable, using browser synthesis.', error.message);
   }
   return false;
 }
