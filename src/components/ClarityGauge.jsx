@@ -1,16 +1,5 @@
-/**
- * ClarityGauge component — animated circular SVG gauge for occupancy scores.
- * Color-coded from red (low) to green (high) with animated fill.
- * @module components/ClarityGauge
- */
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 
-/**
- * @param {Object} props
- * @param {number} [props.score=0] - Score value 0-100
- * @param {number} [props.size=180] - SVG gauge size in pixels
- */
 export default function ClarityGauge({ score = 0, size = 180 }) {
   const [animatedScore, setAnimatedScore] = useState(0);
 
@@ -63,8 +52,3 @@ export default function ClarityGauge({ score = 0, size = 180 }) {
     </div>
   );
 }
-
-ClarityGauge.propTypes = {
-  score: PropTypes.number,
-  size: PropTypes.number,
-};

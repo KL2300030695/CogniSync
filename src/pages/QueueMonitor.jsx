@@ -10,7 +10,7 @@ const STATUS_META = {
 };
 
 export default function QueueMonitor() {
-  const [queues, setQueues]       = useState(() => getLiveQueueData());
+  const [queues, setQueues]       = useState([]);
   const [prediction, setPrediction] = useState(null);
   const [predFacility, setPredFacility] = useState(null);
   const [loading, setLoading]     = useState(false);
@@ -23,6 +23,7 @@ export default function QueueMonitor() {
   };
 
   useEffect(() => {
+    loadQueues();
     const interval = setInterval(loadQueues, 20000);
     return () => clearInterval(interval);
   }, []);

@@ -72,7 +72,7 @@ export function sanitizeForPrompt(text) {
 export function isValidApiKey(key) {
   if (!key || typeof key !== 'string') return false;
   const trimmed = key.trim();
-  return trimmed.length >= 20 && trimmed.length <= 100 && /^[A-Za-z0-9_\-.]+$/.test(trimmed);
+  return trimmed.length >= 20 && trimmed.length <= 100 && /^[A-Za-z0-9_\-\.]+$/.test(trimmed);
 }
 
 /**

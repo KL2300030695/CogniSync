@@ -1,8 +1,3 @@
-/**
- * EventFlow AI — Application entry point.
- * Bootstraps the React app, initializes Google Analytics, and mounts to DOM.
- * @module main
- */
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

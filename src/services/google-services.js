@@ -48,7 +48,7 @@ export function initGoogleAnalytics() {
   document.head.appendChild(script);
 
   window.dataLayer = window.dataLayer || [];
-  function gtag() { window.dataLayer.push(arguments); }
+  function gtag() { window.dataLayer.push(arguments); } // eslint-disable-line prefer-rest-params
   window.gtag = gtag;
 
   gtag('js', new Date());

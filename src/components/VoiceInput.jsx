@@ -1,18 +1,11 @@
-/**
- * VoiceInput component — speech-to-text input for hands-free attendee queries.
- * Uses the Web Speech API with graceful fallback when unsupported.
- * @module components/VoiceInput
- */
-import React, { useState, useCallback, useEffect } from 'react';
-import PropTypes from 'prop-types';
+import React, { useState, useCallback, useRef, useEffect } from 'react';
 import { startListening, stopListening, isSpeechSupported } from '../utils/speech';
-
-const IS_SPEECH_SUPPORTED = isSpeechSupported();
 
 export default function VoiceInput({ onTranscript, onFinalTranscript, disabled }) {
   const [isRecording, setIsRecording] = useState(false);
   const [interimText, setInterimText] = useState('');
   const [error, setError] = useState(null);
+  const supported = useRef(isSpeechSupported());
 
   const handleToggle = useCallback(() => {
     if (isRecording) {
@@ -51,7 +44,7 @@ export default function VoiceInput({ onTranscript, onFinalTranscript, disabled }
     };
   }, []);
 
-  if (!IS_SPEECH_SUPPORTED) {
+  if (!supported.current) {
     return (
       <button
         className="voice-btn"
@@ -117,9 +110,3 @@ export default function VoiceInput({ onTranscript, onFinalTranscript, disabled }
     </div>
   );
 }
-
-VoiceInput.propTypes = {
-  onTranscript: PropTypes.func,
-  onFinalTranscript: PropTypes.func,
-  disabled: PropTypes.bool,
-};

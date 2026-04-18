@@ -1,12 +1,6 @@
-/**
- * EventFlow AI — Root application component.
- * Configures client-side routing and Google Analytics page tracking.
- * @module App
- */
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import ErrorBoundary from './components/ErrorBoundary';
 import LandingPage from './pages/LandingPage';
 import AttendeePage from './pages/AttendeePage';
 import StaffDashboard from './pages/StaffDashboard';
@@ -34,15 +28,13 @@ export default function App() {
     <Router>
       <PageTracker />
       <Navbar />
-      <ErrorBoundary>
-        <Routes>
-          <Route path="/"          element={<LandingPage />}    />
-          <Route path="/attendee"  element={<AttendeePage />}   />
-          <Route path="/dashboard" element={<StaffDashboard />} />
-          <Route path="/queues"    element={<QueueMonitor />}   />
-          <Route path="/settings"  element={<VenueSettings />}  />
-        </Routes>
-      </ErrorBoundary>
+      <Routes>
+        <Route path="/"          element={<LandingPage />}    />
+        <Route path="/attendee"  element={<AttendeePage />}   />
+        <Route path="/dashboard" element={<StaffDashboard />} />
+        <Route path="/queues"    element={<QueueMonitor />}   />
+        <Route path="/settings"  element={<VenueSettings />}  />
+      </Routes>
     </Router>
   );
 }
